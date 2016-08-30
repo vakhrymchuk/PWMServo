@@ -65,7 +65,7 @@ void PWMServo::releaseTimer1() {}
 PWMServo::PWMServo() : pin(0), angle(NO_ANGLE) {}
 
 uint8_t PWMServo::attach(int pinArg) {
-    return attach(pinArg, 544, 2400);
+    return attach(pinArg, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 }
 
 uint8_t PWMServo::attach(int pinArg, int min, int max) {

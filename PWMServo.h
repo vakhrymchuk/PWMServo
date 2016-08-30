@@ -26,6 +26,10 @@
 
 #include <inttypes.h>
 
+#define DEFAULT_PULSE_WIDTH 1500
+#define MIN_PULSE_WIDTH 544
+#define MAX_PULSE_WIDTH 2400
+
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) // Arduino
   #define SERVO_PIN_A 9
   #define SERVO_PIN_B 10
