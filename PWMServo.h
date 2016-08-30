@@ -93,6 +93,9 @@ public:
     uint8_t read();
 
     uint8_t attached();
+
+private:
+    void setTicks(uint16_t) const;
 };
 
 #endif

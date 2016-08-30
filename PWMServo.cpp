@@ -138,8 +138,6 @@ void PWMServo::detach() {
 }
 
 void PWMServo::write(int angleArg) {
-    uint16_t p;
-
     if (angleArg < 0) angleArg = 0;
     if (angleArg > 180) angleArg = 180;
     angle = angleArg;
@@ -147,13 +145,9 @@ void PWMServo::write(int angleArg) {
     // bleh, have to use longs to prevent overflow, could be tricky if always a 16MHz clock, but not true
     // That 8L on the end is the TCNT1 prescaler, it will need to change if the clock's prescaler changes,
     // but then there will likely be an overflow problem, so it will have to be handled by a human.
-    p = (min16 * 16L * clockCyclesPerMicrosecond() +
+    uint16_t p = (min16 * 16L * clockCyclesPerMicrosecond() +
          (max16 - min16) * (16L * clockCyclesPerMicrosecond()) * angle / 180L) / 8L;
-    if (pin == SERVO_PIN_A) OCR1A = p;
-    if (pin == SERVO_PIN_B) OCR1B = p;
-#ifdef SERVO_PIN_C
-    if (pin == SERVO_PIN_C) OCR1C = p;
-#endif
+    setTicks(p);
 }
 
 uint8_t PWMServo::read() {
@@ -167,4 +161,12 @@ uint8_t PWMServo::attached() {
     if (pin == SERVO_PIN_C && attachedC) return 1;
 #endif
     return 0;
+}
+
+void PWMServo::setTicks(const uint16_t p) const {
+    if (pin == SERVO_PIN_A) OCR1A = p;
+    if (pin == SERVO_PIN_B) OCR1B = p;
+#ifdef SERVO_PIN_C
+    if (pin == SERVO_PIN_C) OCR1C = p;
+#endif
 }
