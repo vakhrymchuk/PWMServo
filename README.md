@@ -1,5 +1,7 @@
 # PWMServo
 
+* This implementation support writeMicroseconds method
+
 <pre>
 PWMServo - Hardware Servo Timer Library
 http://arduiniana.org/libraries/pwmservo/
@@ -7,6 +9,7 @@ Author: Jim Studt, jim@federated.com
 Copyright (c) 2007 David A. Mellis.  All right reserved.
 renamed to PWMServo by Mikal Hart
 ported to other chips by Paul Stoffregen
+added writeMicroseconds by Valery Akhrymchuk
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public

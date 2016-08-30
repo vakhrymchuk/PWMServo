@@ -8,6 +8,7 @@
   Copyright (c) 2007 David A. Mellis.  All right reserved.
   renamed to PWMServo by Mikal Hart
   ported to other chips by Paul Stoffregen
+  added writeMicroseconds by Valery Akhrymchuk
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -64,6 +65,9 @@ private:
     uint8_t min16;       // minimum pulse, 16uS units  (default is 34)
     uint8_t max16;       // maximum pulse, 16uS units, 0-4ms range (default is 150)
 
+    uint16_t minPulseWidth;
+    uint16_t maxPulseWidth;
+
     static void seizeTimer1();
 
     static void releaseTimer1();
@@ -89,6 +93,8 @@ public:
     void detach();
 
     void write(int);         // specify the angle in degrees, 0 to 180
+
+    void writeMicroseconds(int);
 
     uint8_t read();
 

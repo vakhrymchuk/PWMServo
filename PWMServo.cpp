@@ -13,6 +13,7 @@
   Copyright (c) 2007 David A. Mellis.  All right reserved.
   renamed to PWMServo by Mikal Hart
   ported to other chips by Paul Stoffregen
+  added writeMicroseconds by Valery Akhrymchuk
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -74,6 +75,9 @@ uint8_t PWMServo::attach(int pinArg, int min, int max) {
 #else
     if (pinArg != SERVO_PIN_A && pinArg != SERVO_PIN_B) return 0;
 #endif
+
+    minPulseWidth = min;
+    maxPulseWidth = max;
 
     min16 = min / 16;
     max16 = max / 16;
@@ -148,6 +152,12 @@ void PWMServo::write(int angleArg) {
     uint16_t p = (min16 * 16L * clockCyclesPerMicrosecond() +
          (max16 - min16) * (16L * clockCyclesPerMicrosecond()) * angle / 180L) / 8L;
     setTicks(p);
+}
+
+void PWMServo::writeMicroseconds(int value) {
+    if (value < minPulseWidth) value = minPulseWidth;
+    if (value > maxPulseWidth) value = maxPulseWidth;
+    setTicks((uint16_t) (value * clockCyclesPerMicrosecond() / 8L));
 }
 
 uint8_t PWMServo::read() {
